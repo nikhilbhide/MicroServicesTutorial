@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: k8s-make-my-vacation-queue-pod
+  name: k8s-activemq-pod
   labels:
-    app: make-my-vacation-queue
+    app: k8s-activemq
 spec:
   containers:
-  - name: make-my-vacation-queue
-    image: nikbhi15docker/k8s-make-my-vacation-queue
+  - name: k8s-activemq-container
+    image: nikbhi15docker/k8s-activemq
