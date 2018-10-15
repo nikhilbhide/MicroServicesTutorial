@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-activemq-messaging-app-service
+
+spec:
+  # This defines which pods are going to be represented by this Service
+  # The service becomes a network endpoint for either other services
+  # or maybe external users to connect to (eg browser)
+  selector:
+    app: k8s-activemq-messaging-app
+
+  ports:
+    - name: http
+      port: 8080
+      nodePort: 30080
+
+  type: NodePort
