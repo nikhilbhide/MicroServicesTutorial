@@ -7,4 +7,4 @@ metadata:
 spec:
   containers:
   - name: k8s-activemq-container
-    image: nikbhi15docker/k8s-activemq
+    image: nikbhi15docker/k8s-active-mq
