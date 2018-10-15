@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: k8s-kafka-pod
+  labels:
+    app: k8s-kafka
+spec:
+  containers:
+  - name: k8s-kafka-container
+    image: spotify/kafka
