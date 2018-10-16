@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sparkintegratortest-webapp-pod
+  labels:
+    app: my-webapp
+spec:
+  containers:
+  - name: my-sparkintegrator
+    image: nikbhi15docker/sparkintegrator
