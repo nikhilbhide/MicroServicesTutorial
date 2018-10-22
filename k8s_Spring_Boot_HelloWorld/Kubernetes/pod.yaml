@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-world-webapp
+  labels:
+    app: hello-world-webapp
+spec:
+  containers:
+  - name: hello-world-webapp
+    image: nikbhi15docker/k8s-springboot-helloworld-app    
