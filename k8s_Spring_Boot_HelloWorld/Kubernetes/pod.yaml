@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: hello-world-webapp
+  name: hello-world-webapp-pod
   labels:
     app: hello-world-webapp
 spec:
