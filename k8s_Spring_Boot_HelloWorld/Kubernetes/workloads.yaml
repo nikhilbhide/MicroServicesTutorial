@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-webapp-deployment
+spec:
+  selector:
+    matchLabels:
+      app: hello-world-webapp
+  replicas: 2
+  template: # template for the pods
+    metadata:
+      labels:
+        app: hello-world-webapp
+    spec:
+      containers:
+      - name: webapp
+        image: nikbhi15docker/k8s-springboot-helloworld-app:v1.0
+        imagePullPolicy: Always
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-webapp-deployment
+spec:
+  selector:
+    matchLabels:
+      app: hello-world-webapp
+  replicas: 2
+  template: # template for the pods
+    metadata:
+      labels:
+        app: hello-world-webapp
+    spec:
+      containers:
+      - name: webapp
+        image: nikbhi15docker/k8s-springboot-helloworld-app:v3.0
+        imagePullPolicy: Always
