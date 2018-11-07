@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-world-app-configmap-pod
+  labels:
+    app: hello-world-app-configmap
+spec:
+  containers:
+  - name: hello-world-webapp-configmap
+    image: nikbhi15docker/k8s-springboot-helloworld-configmap-app
+    imagePullPolicy: Always
+    env:
+        # Define the environment variable
+        - name: SPRING_BOOT_APP_ENV_CONFIG_APP_NAME
+          valueFrom:
+            configMapKeyRef:
+              # The ConfigMap containing the value you want to assign to SPRING_BOOT_APP_ENV_CONFIG_APP_NAME
+              name: app-env-config
+              # Specify the key associated with the value
+              key: app.name              
+        - name: SPRING_BOOT_APP_ENV_CONFIG_APP_DESC
+          valueFrom:
+            configMapKeyRef:
+              # The ConfigMap containing the value you want to assign to SPRING_BOOT_APP_ENV_CONFIG_APP_DESC
+              name: app-env-config
+              # Specify the key associated with the value
+              key: app.desc      
+    volumeMounts:
+    - name: spring-boot-app-env-config-volume
+      mountPath: "/config"
+  volumes:
+    - name: spring-boot-app-env-config-volume
+      configMap:
+        name: app-file-config
+        items:
+        - key: application.properties
+          path: application.properties
+  restartPolicy: Always  
