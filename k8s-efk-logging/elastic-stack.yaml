@@ -306,7 +306,7 @@ metadata:
 spec:
   ports:
   - port: 5601
-    nodePort: 30090
+    nodePort: 31190
     protocol: TCP
     targetPort: ui
   selector:
