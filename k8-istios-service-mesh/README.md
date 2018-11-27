@@ -16,6 +16,7 @@ helm template install/kubernetes/helm/istio --name istio --namespace istio-syste
   --set prometheus.enabled=true \
   --set global.proxy.envoyStatsd.enabled=false \
   --set pilot.sidecar=false > $HOME/istio-minimal.yaml
+  
 6.	kubectl apply -f install/kubernetes/istio-demo.yaml
 7.	check the status of services
 kubectl get svc -n istio-system
