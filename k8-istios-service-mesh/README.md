@@ -21,9 +21,10 @@ helm template install/kubernetes/helm/istio --name istio --namespace istio-syste
 7.	check the status of services
 kubectl get svc -n istio-system
 8.	Check the status of pods
-
 kubectl get pods -n istio-system
+
 9.	kubectl label namespace default istio-injection=enabled
+
 10.	Deploy bookinfo application as follows –
 kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
  
@@ -33,7 +34,5 @@ As local minikube cluster does not support external load balancer, you will have
 export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
 export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
 export INGRESS_HOST=$(minikube ip)
-12.	
-Prometheus 
-kubectl apply -f install/kubernetes/addons/prometheus.yaml
-> kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=prometheus -o jsonpath='{.items[0].metadata.name}') 9090:9090
+12. Access prometheus from localhost	
+kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=prometheus -o jsonpath='{.items[0].metadata.name}') 9090:9090
