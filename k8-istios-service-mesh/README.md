@@ -32,7 +32,10 @@ kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
 As local minikube cluster does not support external load balancer, you will have to make use of NodePort service. Setup INGRESS_HOST, INGRESS_SECRET_PORT and INGRESS_PORT as follows.
 
 export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
+
 export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
+
 export INGRESS_HOST=$(minikube ip)
+
 12. Access prometheus from localhost	
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=prometheus -o jsonpath='{.items[0].metadata.name}') 9090:9090
