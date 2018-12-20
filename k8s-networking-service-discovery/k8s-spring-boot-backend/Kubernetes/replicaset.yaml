@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: hello-world-webapp-replicaset
+spec:
+  selector:
+    matchLabels:
+      app: hello-world-webapp
+  replicas: 3
+  template: # template for the pods
+    metadata:
+      labels:
+        app: hello-world-webapp
+    spec:
+      containers:
+      - name: hello-world-webapp
+        image: nikbhi15docker/k8s-springboot-helloworld-app:v4.0

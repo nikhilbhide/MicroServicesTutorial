@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-backend-app-service
+
+spec:
+  # This defines which pods are going to be represented by this Service
+  # The service becomes a network endpoint for either other services
+  # or maybe external users to connect to (eg browser)
+  selector:
+    app: springboot-backend-app
+
+  ports:
+    - name: http
+      port: 8082
+      nodePort: 31084
+
+  type: NodePort
+
+  

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: springboot-backend-app-pod
+  labels:
+    app: springboot-backend-app
+spec:
+  containers:
+  - name: springboot-backend-app
+    image: nikbhi15docker/k8s-springboot-backend-app   
