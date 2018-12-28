@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-autoscaling-webapp-v1-deployment
+spec:
+  selector:
+    matchLabels:
+      app: hello-world-autoscaling-webapp-v1
+  template: # template for the pods
+    metadata:
+      labels:
+        app: hello-world-autoscaling-webapp-v1
+    spec:
+      containers:
+      - name: app
+        image: nikbhi15docker/k8s-springboot-helloworld-autoscaling-app-v1
+        imagePullPolicy: Always

@@ -1,0 +1,113 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    sidecar.istio.io/status: '{"version":"48f39c4792663fa70ea9c6eb9c29612031cbe36a3850b41faa407da434ec11d3","initContainers":["istio-init"],"containers":["istio-proxy"],"volumes":["istio-envoy","istio-certs"],"imagePullSecrets":null}'
+  creationTimestamp: null
+  labels:
+    app: hello-world-webapp
+  name: hello-world-webapp-pod
+spec:
+  containers:
+  - image: nikbhi15docker/k8s-springboot-helloworld-app:v2.0
+    name: hello-world-webapp
+    resources: {}
+  - args:
+    - proxy
+    - sidecar
+    - --configPath
+    - /etc/istio/proxy
+    - --binaryPath
+    - /usr/local/bin/envoy
+    - --serviceCluster
+    - hello-world-webapp
+    - --drainDuration
+    - 45s
+    - --parentShutdownDuration
+    - 1m0s
+    - --discoveryAddress
+    - istio-pilot.istio-system:15005
+    - --discoveryRefreshDelay
+    - 1s
+    - --zipkinAddress
+    - zipkin.istio-system:9411
+    - --connectTimeout
+    - 10s
+    - --proxyAdminPort
+    - "15000"
+    - --controlPlaneAuthPolicy
+    - MUTUAL_TLS
+    env:
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    - name: INSTANCE_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+    - name: ISTIO_META_POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: ISTIO_META_INTERCEPTION_MODE
+      value: REDIRECT
+    - name: ISTIO_META_app
+      value: hello-world-webapp
+    image: docker.io/istio/proxyv2:1.0.3
+    imagePullPolicy: IfNotPresent
+    name: istio-proxy
+    ports:
+    - containerPort: 15090
+      name: http-envoy-prom
+      protocol: TCP
+    resources:
+      requests:
+        cpu: 10m
+    securityContext:
+      readOnlyRootFilesystem: true
+      runAsUser: 1337
+    volumeMounts:
+    - mountPath: /etc/istio/proxy
+      name: istio-envoy
+    - mountPath: /etc/certs/
+      name: istio-certs
+      readOnly: true
+  initContainers:
+  - args:
+    - -p
+    - "15001"
+    - -u
+    - "1337"
+    - -m
+    - REDIRECT
+    - -i
+    - '*'
+    - -x
+    - ""
+    - -b
+    - ""
+    - -d
+    - ""
+    image: docker.io/istio/proxy_init:1.0.3
+    imagePullPolicy: IfNotPresent
+    name: istio-init
+    resources: {}
+    securityContext:
+      capabilities:
+        add:
+        - NET_ADMIN
+      privileged: true
+  volumes:
+  - emptyDir:
+      medium: Memory
+    name: istio-envoy
+  - name: istio-certs
+    secret:
+      optional: true
+      secretName: istio.default
+status: {}
